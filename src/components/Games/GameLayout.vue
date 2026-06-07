@@ -1,7 +1,9 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, useSlots } from 'vue'
 import SharedSearch from '@/components/Shared/SharedSearch.vue'
 
+const slots = useSlots()
+// console.log(slots.title)
 const searchInput = ref('')
 
 const emit = defineEmits(['setGameView'])
@@ -17,6 +19,11 @@ const { games } = defineProps({
 const onSearch = () => {
   const termSearch = searchInput.value.toLowerCase()
 
+  if (termSearch.trim() === '') {
+    emit('setGameView', games)
+    return
+  }
+
   const filteredGames = games.filter((game) => {
     return game.title.toLowerCase().includes(termSearch)
   })
@@ -27,11 +34,12 @@ const onSearch = () => {
 
 <template>
   <section>
-    <h2 style="text-align: center">Juegos recientes</h2>
+    <slot name="title" />
+    <h2 v-if="!slots.title" style="text-align: center">Juegos recientes</h2>
+    <SharedSearch @search="onSearch" v-model="searchInput" id="probando" />
     <div class="game-layout">
-      <SharedSearch @search="onSearch" v-model="searchInput" id="probando" />
+      <slot />
     </div>
-    <slot />
   </section>
 </template>
 
@@ -40,6 +48,6 @@ const onSearch = () => {
   display: grid;
   gap: 2rem;
   margin: 1rem auto;
-  max-width: 90%;
+  max-width: 65%;
 }
 </style>

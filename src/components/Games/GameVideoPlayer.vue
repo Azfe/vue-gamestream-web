@@ -13,6 +13,7 @@ defineProps({
 onMounted(() => {
   videoRef.value.play()
 })
+
 </script>
 
 <template>

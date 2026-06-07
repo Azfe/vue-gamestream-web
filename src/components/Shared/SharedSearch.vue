@@ -1,6 +1,6 @@
 <script setup>
-import IconSearch from '../Icons/IconSearch.vue'
 import { ref, computed } from 'vue'
+import IconSearch from '../Icons/IconSearch.vue'
 
 const model = defineModel()
 const emit = defineEmits(['search'])
@@ -52,6 +52,8 @@ const searchClasses = computed(() => {
   align-items: center;
   border: 1px solid #d9d9d9;
   padding: 0.5rem;
+  max-width: 64%;
+  margin: 0 auto;
 }
 
 .search--active {
