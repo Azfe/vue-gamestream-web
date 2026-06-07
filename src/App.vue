@@ -1,5 +1,7 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { ref } from 'vue'
+import { useFetch } from '@/composables/useFetch.js'
+
 import LayoutHero from "@/components/Layout/LayoutHero.vue";
 import GameLayout from "@/components/Games/GameLayout.vue";
 import GameCard from "@/components/Games/GameCard.vue"
@@ -10,29 +12,8 @@ const API_URL = 'https://gamestreamapi.herokuapp.com/api/games'
 
 const gamesView = ref([])
 
-const state = reactive({
-  error: null,
-  isLoading: false,
-  data: []
-})
-
-const fetchGames = async () => {
-  try {
-    state.isLoading = true
-    const response = await fetch(API_URL)
-    const json = await response.json()
-    state.data = json
-    gamesView.value = json
-    return state.data
-  } catch (error) {
-    state.error = error
-  } finally {
-    state.isLoading = false
-  }
-}
-
-onMounted(async () => {
-  await fetchGames()
+const { state } = useFetch(API_URL, (json) => {
+  gamesView.value = json
 })
 
 const setGameView = (filteredGames) => {
