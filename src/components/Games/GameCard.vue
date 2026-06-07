@@ -2,6 +2,7 @@
 import GameGallery from './GameGallery.vue'
 import GameTag from './GameTag.vue'
 import IconPlayCircle from '../Icons/IconPlayCircle.vue'
+import { modalStore } from '../store/modalStore'
 
 defineProps({
   game: {
@@ -41,7 +42,7 @@ defineProps({
 
 <style scoped>
 .game-card {
-  width: calc(100% - 1rem);
+  width: 100%;
   border: 1px solid #ddd;
   border-radius: 0.5rem;
   padding: 1rem;
